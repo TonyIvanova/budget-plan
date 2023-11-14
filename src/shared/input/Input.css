@@ -1,0 +1,29 @@
+.label-container {
+  display: flex;
+  justify-content: column;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.custom-input input {
+  border-radius: 3px;
+  border: 1px solid rgba(178, 187, 213, 0.5);
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+
+.custom-input input:focus {
+  outline: 1px solid rgba(178, 187, 213, 0.5);
+}
+
+.budget-table {
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 24px 0; 
+}
+
+.budget-table .custom-input {
+    width: 160px;
+}

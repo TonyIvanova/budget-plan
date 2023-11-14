@@ -1,38 +1,69 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: "AvenirNext";
+  src: url("assets/fonts/AvenirNextLTPro-Bold.otf") format('opentype');
+  font-weight: bold;
+  font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: "AvenirNext";
+  src: url("assets/fonts/AvenirNextLTPro-It.otf") format('opentype');
+  font-weight: normal;
+  font-style: italic;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+  font-family: "AvenirNext";
+  src: url("assets/fonts/AvenirNextLTPro-Regular.otf") format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+* {
+    font-family: "AvenirNext";
+}
+
+h1 {
+  color: #182033;
+  font-family: AvenirNext;
+  font-size: 24px;
+  line-height: normal;
+   font-style: normal;
+  letter-spacing: -0.2px;
+  margin: 0 0 16px 0; 
+}
+
+h2 {
+  color: #182033;
+  font-family: AvenirNext;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+    margin: 0 0 8px 0; 
+}
+
+p {
+  color: #99a4c2;
+  font-family: AvenirNext;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  margin: 0; 
+}
+
+label {
   display: flex;
-  flex-direction: column;
+  gap: 8px;
+  justify-content: start;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: #2f3b66;
+  font-family: AvenirNext;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px; /* 150% */
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

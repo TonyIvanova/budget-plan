@@ -1,0 +1,14 @@
+.budget-page {
+    margin: 50px; 
+}
+
+.info-text {
+    width: 678px;
+}
+
+.container {
+    display: flex; 
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
