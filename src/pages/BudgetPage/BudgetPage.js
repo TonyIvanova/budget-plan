@@ -9,7 +9,6 @@ const BudgetPage = () => {
   const { channels, addChannel } = useChannels();
 
   const onAddChannel = () => {
-    console.info("add channel");
     const newChannel = {
       name: "New Channel",
       id: channels.length + 1,

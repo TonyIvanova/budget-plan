@@ -13,8 +13,20 @@ export const useUpdateChannels = () => {
 
 export const ChannelsProvider = ({ children }) => {
   const [channels, setChannels] = useState([
-    { name: "Paid Reviews", id: 1, isOpen: true },
+    { name: "Paid Reviews", id: 1, isOpen: true }, // should store channel budget as well
   ]);
+
+  const setChannelBudget = (channelId, budget) => {
+    // We need to update all channels to be able to access the data in tab 2
+    const updatedChannels = channels.map((channel) => {
+      if (channel.id === channelId) {
+        channel = { ...channel, budget: budget };
+      }
+      return channel;
+    });
+
+    setChannels(updatedChannels);
+  };
 
   const addChannel = (newChannel) => {
     closeAll();
@@ -49,7 +61,9 @@ export const ChannelsProvider = ({ children }) => {
   };
 
   return (
-    <ChannelsContext.Provider value={{ channels, addChannel, toggleChannel }}>
+    <ChannelsContext.Provider
+      value={{ channels, addChannel, toggleChannel, setChannelBudget }}
+    >
       {children}
     </ChannelsContext.Provider>
   );

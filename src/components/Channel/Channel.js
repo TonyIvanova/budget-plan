@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useCallback } from "react";
+import _debounce from "lodash.debounce";
 import "./Channel.css";
 import arrow from "../../assets/images/arrow.svg";
 import channelIcon from "../../assets/images/channel.svg";
@@ -10,11 +11,20 @@ import { Frequency, BudgetAllocation } from "../../context/BudgetContext";
 import { useBudget, useUpdateBudget } from "../../context/BudgetContext";
 import { useChannels } from "../../context/ChannelsContext";
 
-const Channel = ({ channel }) => {
+const Channel = ({ channel, setChannelBudget }) => {
   const { toggleChannel } = useChannels();
 
   const budget = useBudget();
   const updateBudget = useUpdateBudget();
+
+  const debounceBudgetChange = useCallback(
+    _debounce(setChannelBudget, 1000),
+    []
+  );
+
+  useEffect(() => {
+    debounceBudgetChange(channel.id, budget);
+  }, [budget, channel.id, debounceBudgetChange]);
 
   const onHeaderClick = () => {
     toggleChannel(channel.id);

@@ -53,6 +53,7 @@ export const BudgetProvider = ({ children }) => {
   const updateBudget = ({ frequency, allocation, baseline }) => {
     const budget = generateBudget({ frequency, allocation, baseline });
     setBudget(budget);
+    console.info("Budget updated");
   };
 
   const updateDistribution = (newDistribution) => {
@@ -66,6 +67,7 @@ export const BudgetProvider = ({ children }) => {
       baseline: newBaseline,
       distribution: [...newDistribution],
     });
+    console.info("Distribution updated");
   };
 
   return (

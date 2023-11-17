@@ -4,12 +4,18 @@ import { BudgetProvider } from "../../context/BudgetContext";
 import { useChannels } from "../../context/ChannelsContext";
 
 const FirstTab = () => {
-  const { channels } = useChannels();
+  const { channels, setChannelBudget } = useChannels();
 
   const allChannels = channels.map((channel) => {
     return (
       <BudgetProvider>
-        <Channel key={channel.id} channel={channel} />
+        <Channel
+          key={channel.id}
+          channel={channel}
+          setChannelBudget={(channelId, budget) =>
+            setChannelBudget(channelId, budget)
+          }
+        />
       </BudgetProvider>
     );
   });
