@@ -46,6 +46,9 @@
     gap: 54px; 
 }
 
+.budget-options Input{
+  width: 237px;
+}
 @keyframes rotateDown {
   0% {
     transform: rotateZ(-90deg);

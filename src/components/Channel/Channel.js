@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useConext, useStateConext } from "react";
 import "./Channel.css";
 import arrow from "../../assets/images/arrow.svg";
 import channel from "../../assets/images/channel.svg";
@@ -6,32 +6,29 @@ import Input from "../../shared/input/Input";
 import ButtonGroup from "../../shared/ButtonGroup/ButtonGroup";
 import Dropdown from "../../shared/Dropdown/dropdown";
 import BudgetBreakdown from "./BudgetBreakdown";
+import { Frequency, BudgetAllocation } from "../../context/BudgetContext";
+import { useBudget, useUpdateBudget } from "../../context/BudgetContext";
 
 const Channel = () => {
-  const dropdownOptions = [
-    {
-      label: "Annually",
-    },
-    {
-      label: "Monthly",
-    },
-    {
-      label: "Quorterly",
-    },
-  ];
-
   const [isOpen, setIsOpen] = useState(true);
+
+  const budget = useBudget();
+  const updateBudget = useUpdateBudget();
 
   const onHeaderClick = () => {
     setIsOpen(!isOpen);
   };
 
-  const onButtonGroupClick = (index) => {
-    console.log("Button Clicked " + index);
+  const onAllocationChange = (button) => {
+    updateBudget({ ...budget, allocation: button.value });
   };
 
-  const onSelect = () => {
-    console.info("Select");
+  const onFrequencyChange = (frequencyOptions) => {
+    updateBudget({ ...budget, frequency: frequencyOptions.value });
+  };
+
+  const onBaselineChange = (event) => {
+    updateBudget({ ...budget, baseline: parseFloat(event.target.value) });
   };
 
   return (
@@ -48,21 +45,28 @@ const Channel = () => {
       {isOpen ? (
         <div className="channel-content">
           <div className="budget-options">
-            <Input
-              label="Baseline [Annual] Budget"
-              infoText="This is info text"
-            />
-            <ButtonGroup
-              buttons={[{ label: "Equal" }, { label: "Manual" }]}
-              label="Button group"
-              infoText="Some info text"
-              onClick={onButtonGroupClick}
-            />
             <Dropdown
               options={dropdownOptions}
-              onSelect={onSelect}
-              label="Button group"
+              onSelect={onFrequencyChange}
+              label="Budget Frequency"
               infoText="Some info text"
+            />
+            <Input
+              label={`Baseline ${budget.frequency.name} Budget`}
+              infoText="This is info text"
+              onChange={onBaselineChange}
+              disabled={budget.allocation === BudgetAllocation.Manual}
+              type="number"
+              value={budget.baseline}
+            />
+            <ButtonGroup
+              buttons={[
+                { label: "Equal", value: BudgetAllocation.Equal },
+                { label: "Manual", value: BudgetAllocation.Manual },
+              ]}
+              label="Budget Allocation"
+              infoText="Some info text"
+              onClick={onAllocationChange}
             />
           </div>
           <BudgetBreakdown />
@@ -75,3 +79,18 @@ const Channel = () => {
 };
 
 export default Channel;
+
+const dropdownOptions = [
+  {
+    label: "Annually",
+    value: Frequency.Annually,
+  },
+  {
+    label: "Monthly",
+    value: Frequency.Monthly,
+  },
+  {
+    label: "Quorterly",
+    value: Frequency.Quarterly,
+  },
+];

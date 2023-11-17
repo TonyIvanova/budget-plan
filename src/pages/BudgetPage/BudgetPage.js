@@ -3,6 +3,7 @@ import "./BudgetPage.css";
 import Button from "../../shared/button/Button.js";
 import plus from "../../assets/images/plus.svg";
 import Tabs from "../../components/Tabs/Tabs.js";
+import { BudgetProvider } from "../../context/BudgetContext.js";
 
 const BudgetPage = () => {
   return (
@@ -16,7 +17,9 @@ const BudgetPage = () => {
         </p>
         <Button label="Add Channel" icon={plus} />
       </div>
-      <Tabs />
+      <BudgetProvider>
+        <Tabs />
+      </BudgetProvider>
     </section>
   );
 };

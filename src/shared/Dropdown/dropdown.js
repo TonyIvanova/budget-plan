@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import arrow from "../../assets/images/arrow.svg";
 import info from "../../assets/images/info.svg";
 import "./dropdown.css";
@@ -6,6 +6,13 @@ import "./dropdown.css";
 const Dropdown = ({ options, infoText, label, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    if (options) {
+      setSelected(options[0]);
+    }
+  }, [options]);
+
   let labelElement;
   if (label) {
     labelElement = (

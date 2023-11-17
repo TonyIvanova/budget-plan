@@ -13,13 +13,13 @@ const Tabs = () => {
   return (
     <div className="tabs">
       <button
-        className={selected === 1 ? "active tabs" : "tabs"}
+        className={selected === 1 ? "active tab" : "tab"}
         onClick={onTabClick(1)}
       >
         Tab 1
       </button>
       <button
-        className={selected === 2 ? "active tabs" : "tabs"}
+        className={selected === 2 ? "active tab" : "tab"}
         onClick={onTabClick(2)}
       >
         Tab 2

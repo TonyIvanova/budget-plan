@@ -7,6 +7,7 @@
   border-radius: 4px;
   filter: drop-shadow(0px 1px 2px #e6e8f0);
     margin-top: 8px;
+    height: 40px;
 }
 
 
@@ -19,6 +20,7 @@
 }
 
 .button-group button {
+  height: 40px;
   color: #707ea7;
   background: none;
   border: none;

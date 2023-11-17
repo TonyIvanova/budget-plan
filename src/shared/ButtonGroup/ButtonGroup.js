@@ -7,7 +7,7 @@ const ButtonGroup = ({ label, infoText, buttons, onClick }) => {
 
   const onButtonClick = (button, index) => {
     setActive(index);
-    onClick(index);
+    onClick(button);
   };
 
   let labelElement;

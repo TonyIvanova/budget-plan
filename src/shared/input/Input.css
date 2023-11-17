@@ -1,4 +1,4 @@
-.label-container {
+.custom-input {
   display: flex;
   justify-content: column;
   flex-direction: column;
@@ -7,8 +7,9 @@
 
 .custom-input input {
   border-radius: 3px;
+  height: 40px;
   border: 1px solid rgba(178, 187, 213, 0.5);
-  padding: 8px 16px;
+  padding: 0 16px;
   font-size: 14px;
 }
 

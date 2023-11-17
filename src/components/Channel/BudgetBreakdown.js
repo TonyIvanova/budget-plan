@@ -1,40 +1,35 @@
 import React from "react";
 import "./BudgetBrakdown.css";
 import Input from "../../shared/input/Input";
-const BudgetBreakdown = ({ frequency, baseline, allocation }) => {
-  const values = [
-    {
-      date: "May 21",
-      value: "",
-    },
-    {
-      date: "May 21",
-      value: "",
-    },
-    {
-      date: "May 21",
-      value: "",
-    },
-    {
-      date: "May 21",
-      value: "",
-    },
-    {
-      date: "May 21",
-      value: "",
-    },
-    {
-      date: "May 21",
-      value: "",
-    },
-    {
-      date: "May 21",
-      value: "",
-    },
-  ];
+import {
+  BudgetAllocation,
+  useBudget,
+  useUpdateDistribution,
+} from "../../context/BudgetContext";
 
-  const inputsTable = values.map((value) => {
-    return <Input label={value.date} />;
+const BudgetBreakdown = () => {
+  const budget = useBudget();
+  const updateDistribution = useUpdateDistribution();
+
+  const onValueChange = (value, index) => {
+    const newDistribution = budget.distribution;
+    newDistribution[index].value = parseFloat(value);
+    updateDistribution(newDistribution);
+  };
+
+  const inputsTable = budget.distribution.map((item, i) => {
+    return (
+      <Input
+        label={item.timePeriod}
+        key={i}
+        value={item.value}
+        type="number"
+        disabled={
+          budget.allocation === BudgetAllocation.Equal ? "disabled" : ""
+        }
+        onChange={(event) => onValueChange(event.target.value, i)}
+      />
+    );
   });
 
   return (
