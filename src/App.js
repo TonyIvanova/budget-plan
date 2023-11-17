@@ -1,10 +1,13 @@
 import "./App.css";
 import BudgetPage from "./pages/BudgetPage/BudgetPage";
+import { ChannelsProvider } from "./context/ChannelsContext";
 
 function App() {
   return (
     <div className="App">
-      <BudgetPage></BudgetPage>
+      <ChannelsProvider>
+        <BudgetPage></BudgetPage>
+      </ChannelsProvider>
     </div>
   );
 }

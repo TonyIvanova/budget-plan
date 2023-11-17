@@ -1,22 +1,23 @@
-import React, { useState, useConext, useStateConext } from "react";
+import React, { useState } from "react";
 import "./Channel.css";
 import arrow from "../../assets/images/arrow.svg";
-import channel from "../../assets/images/channel.svg";
+import channelIcon from "../../assets/images/channel.svg";
 import Input from "../../shared/input/Input";
 import ButtonGroup from "../../shared/ButtonGroup/ButtonGroup";
 import Dropdown from "../../shared/Dropdown/dropdown";
 import BudgetBreakdown from "./BudgetBreakdown";
 import { Frequency, BudgetAllocation } from "../../context/BudgetContext";
 import { useBudget, useUpdateBudget } from "../../context/BudgetContext";
+import { useChannels } from "../../context/ChannelsContext";
 
-const Channel = () => {
-  const [isOpen, setIsOpen] = useState(true);
+const Channel = ({ channel }) => {
+  const { toggleChannel } = useChannels();
 
   const budget = useBudget();
   const updateBudget = useUpdateBudget();
 
   const onHeaderClick = () => {
-    setIsOpen(!isOpen);
+    toggleChannel(channel.id);
   };
 
   const onAllocationChange = (button) => {
@@ -35,14 +36,14 @@ const Channel = () => {
     <section className="channel">
       <div className="channel-header" onClick={onHeaderClick}>
         <img
-          className={isOpen ? "arrow open" : "arrow"}
+          className={channel.isOpen ? "arrow open" : "arrow"}
           src={arrow}
           alt="open"
         />
-        <img className="channel-icon" src={channel} alt="channel" />
-        <p>Paid reviews</p>
+        <img className="channel-icon" src={channelIcon} alt="channel" />
+        <p>{channel.name}</p>
       </div>
-      {isOpen ? (
+      {channel.isOpen ? (
         <div className="channel-content">
           <div className="budget-options">
             <Dropdown
