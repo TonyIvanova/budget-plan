@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import info from "../../assets/images/info.svg";
 import "./Input.css";
-import _debounce from "lodash.debounce";
+
 
 const Input = ({ type, name, value, label, infoText, disabled, onChange }) => {
   let labelElement;
   const [localValue, setLocalValue] = useState(value);
-
-  const debounceChange = useCallback(_debounce(onChange, 300), []);
 
   useEffect(() => {
     setLocalValue(value);
@@ -15,7 +13,7 @@ const Input = ({ type, name, value, label, infoText, disabled, onChange }) => {
 
   const inputChange = (event) => {
     setLocalValue(event.target.value);
-    debounceChange(event);
+    onChange(event.target.value);
   };
 
   if (label) {

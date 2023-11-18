@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./BudgetPage.css";
 import Button from "../../shared/button/Button.js";
 import plus from "../../assets/images/plus.svg";
 import Tabs from "../../components/Tabs/Tabs.js";
-import { useChannels } from "../../context/ChannelsContext.js";
+import { useDispatch, useSelector } from "react-redux";
+import { addChannelAndCreateBudgetAndDistribution } from "../../features/channelsSlice";
+import { createNewBudget } from "../../features/budgetsSlice";
+import { createNewDistribution } from "../../features/budgetDistributionsSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 const BudgetPage = () => {
-  const { channels, addChannel } = useChannels();
+  // const channels = useSelector((state) => state.channels);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAddChannel();
+  }, []);
 
   const onAddChannel = () => {
     const newChannel = {
       name: "New Channel",
-      id: channels.length + 1,
+      id: nanoid(),
       isOpen: true,
+      budgetId: nanoid(),
     };
-    addChannel(newChannel);
+    // we don't need a distribution id, because one budget has one distribution
+    dispatch(addChannelAndCreateBudgetAndDistribution(newChannel));
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import _debounce from "lodash.debounce";
 import "./Channel.css";
 import arrow from "../../assets/images/arrow.svg";
@@ -7,39 +7,60 @@ import Input from "../../shared/input/Input";
 import ButtonGroup from "../../shared/ButtonGroup/ButtonGroup";
 import Dropdown from "../../shared/Dropdown/dropdown";
 import BudgetBreakdown from "./BudgetBreakdown";
-import { Frequency, BudgetAllocation } from "../../context/BudgetContext";
-import { useBudget, useUpdateBudget } from "../../context/BudgetContext";
-import { useChannels } from "../../context/ChannelsContext";
+import { Frequency, BudgetAllocation } from "../../features/budgetsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateChannelBudgetAllocation,
+  updateChannelBudgetBaseline,
+  updateChannelBudgetFrequency,
+} from "../../features/budgetsSlice";
+import { toggleChannel } from "../../features/channelsSlice";
 
 const Channel = ({ channel, setChannelBudget }) => {
-  const { toggleChannel } = useChannels();
+  const dispatch = useDispatch();
+  const budgets = useSelector((state) => state.budgetsReducer.budgets);
+  const budget = budgets.find((budget) => budget.channelId === channel.id);
+  const [budgetBaseline, setBudgetBaseline] = useState(budget?.baseline);
 
-  const budget = useBudget();
-  const updateBudget = useUpdateBudget();
-
-  const debounceBudgetChange = useCallback(
-    _debounce(setChannelBudget, 1000),
+  const debounceBudgetBaselineChange = useCallback(
+    _debounce((value) => updateBudgetBaseline(value), 300),
     []
   );
 
-  useEffect(() => {
-    debounceBudgetChange(channel.id, budget);
-  }, [budget, channel.id]);
-
   const onHeaderClick = () => {
-    toggleChannel(channel.id);
+    dispatch(toggleChannel(channel.id));
   };
 
   const onAllocationChange = (button) => {
-    updateBudget({ ...budget, allocation: button.value });
+    dispatch(
+      updateChannelBudgetAllocation({
+        channelId: channel.id,
+        allocation: button.value,
+      })
+    );
   };
 
   const onFrequencyChange = (frequencyOptions) => {
-    updateBudget({ ...budget, frequency: frequencyOptions.value });
+    dispatch(
+      updateChannelBudgetFrequency({
+        channelId: channel.id,
+        frequency: frequencyOptions.value,
+      })
+    );
   };
 
-  const onBaselineChange = (event) => {
-    updateBudget({ ...budget, baseline: parseFloat(event.target.value) });
+  const onBaselineChange = (value) => {
+    setBudgetBaseline(value);
+    debounceBudgetBaselineChange(value);
+  };
+
+  const updateBudgetBaseline = (value) => {
+    dispatch(
+      updateChannelBudgetBaseline({
+        channelId: channel.id,
+        baseline: parseFloat(value),
+      })
+    );
   };
 
   return (
@@ -63,12 +84,12 @@ const Channel = ({ channel, setChannelBudget }) => {
               infoText="Some info text"
             />
             <Input
-              label={`Baseline ${budget.frequency.name} Budget`}
+              label={`Baseline ${budget?.frequency?.name} Budget`}
               infoText="This is info text"
               onChange={onBaselineChange}
-              disabled={budget.allocation === BudgetAllocation.Manual}
+              disabled={budget?.allocation === BudgetAllocation.Manual}
               type="number"
-              value={budget.baseline}
+              value={budgetBaseline}
             />
             <ButtonGroup
               buttons={[
@@ -80,7 +101,7 @@ const Channel = ({ channel, setChannelBudget }) => {
               onClick={onAllocationChange}
             />
           </div>
-          <BudgetBreakdown />
+          <BudgetBreakdown budgetId={channel.budgetId} />
         </div>
       ) : (
         ""

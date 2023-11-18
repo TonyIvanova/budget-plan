@@ -1,33 +1,57 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "./BudgetBrakdown.css";
 import Input from "../../shared/input/Input";
-import {
-  BudgetAllocation,
-  useBudget,
-  useUpdateDistribution,
-} from "../../context/BudgetContext";
+import { useDispatch, useSelector } from "react-redux";
+import { updateBudgetDistribution } from "../../features/budgetDistributionsSlice";
+import BudgetAllocation from "../../features/budgetsSlice";
+import _debounce from "lodash.debounce";
 
-const BudgetBreakdown = () => {
-  const budget = useBudget();
-  const updateDistribution = useUpdateDistribution();
+const BudgetBreakdown = ({ budgetId }) => {
+  const budgets = useSelector((state) => state.budgetsReducer.budgets);
+  const budget = budgets?.find((budget) => budget.id === budgetId);
 
-  const onValueChange = (value, index) => {
-    const newDistribution = budget.distribution;
-    newDistribution[index].value = parseFloat(value);
-    updateDistribution(newDistribution);
+  const distributions = useSelector(
+    (state) => state.budgetDistributionsReducer.budgetDistributions
+  );
+
+  const distribution = distributions.find(
+    (distribution) => distribution.budgetId === budgetId
+  );
+  const dispatch = useDispatch();
+
+  const debounceUpdateDistribution = useCallback(
+    _debounce((value, index) => updateDistribution(value, index), 300),
+    []
+  );
+
+  const updateDistribution = (value, index) => {
+    console.info("updating distribution");
+    const newDistribution = distribution.distribution.map((item, i) => {
+      if (i === index) {
+        return {
+          timePeriod: item.timePeriod,
+          value: parseFloat(value),
+        };
+      }
+      return item;
+    });
+    dispatch(
+      updateBudgetDistribution({
+        budgetId: distribution.budgetId,
+        newDistribution,
+      })
+    );
   };
-
-  const inputsTable = budget.distribution.map((item, i) => {
+  const inputsTable = distribution.distribution?.map((item, i) => {
+    const inputValue = item.value ? item.value : 0;
     return (
       <Input
         label={item.timePeriod}
         key={i}
-        value={item.value}
+        value={inputValue}
         type="number"
-        disabled={
-          budget.allocation === BudgetAllocation.Equal ? "disabled" : ""
-        }
-        onChange={(event) => onValueChange(event.target.value, i)}
+        disabled={budget.allocation === "equal" ? "disabled" : ""}
+        onChange={(event) => debounceUpdateDistribution(event, i)}
       />
     );
   });

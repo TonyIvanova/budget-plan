@@ -1,23 +1,29 @@
 import React from "react";
-import { useChannels } from "../../context/ChannelsContext";
 import channelIcon from "../../assets/images/channel.svg";
 import background from "../../assets/images/channels-view-background.svg";
-import { months } from "../../context/BudgetContext";
+import { months } from "../../features/budgetsSlice";
 import smallArrow from "../../assets/images/small-arrow.svg";
+import { useSelector } from "react-redux";
 
 import "./ChannelsReview.css";
 
 const ChannelsReview = () => {
-  const { channels } = useChannels();
-  const [isSlideLeft, setIsSlideLeft] = React.useState(true);
+  const channels = useSelector((state) => state.channelReducer.channels);
+  const budgetDistributions = useSelector(
+    (state) => state.budgetDistributionsReducer.budgetDistributions
+  );
 
   const getChannelValues = (channel) => {
-    return channel?.budget?.distribution?.map((value, index) => {
-      return <td>${value.value}</td>;
-    });
+    console.info(budgetDistributions);
+    console.info(channel.budgetId);
+    return budgetDistributions
+      .find((distribution) => distribution.budgetId === channel.budgetId)
+      .distribution.map((value, index) => {
+        return <td>${value.value}</td>;
+      });
   };
 
-  const tableValues = channels?.map((channel) => {
+  const tableValues = channels.map((channel) => {
     return (
       <tr>
         <td
@@ -45,13 +51,13 @@ const ChannelsReview = () => {
     );
   });
 
-  const onSlide = (where) => {
-    if (where === "left") {
-      setIsSlideLeft(true);
-    } else {
-      setIsSlideLeft(false);
-    }
-  };
+  // const onSlide = (where) => {
+  //   if (where === "left") {
+  //     setIsSlideLeft(true);
+  //   } else {
+  //     setIsSlideLeft(false);
+  //   }
+  // };
 
   return (
     <table className="channels-table">

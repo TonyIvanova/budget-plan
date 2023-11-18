@@ -1,24 +1,28 @@
 import React from "react";
 import Channel from "../Channel/Channel";
-import { BudgetProvider } from "../../context/BudgetContext";
-import { useChannels } from "../../context/ChannelsContext";
+import { useSelector, useDispatch } from "react-redux";
 
 const FirstTab = () => {
-  const { channels, setChannelBudget } = useChannels();
+  const channels = useSelector((state) => state.channelReducer.channels);
+  const dispatch = useDispatch();
+
+  const setChannelBudget = (channelId, budget) => {
+    dispatch(setChannelBudget(channelId, budget));
+  };
 
   const allChannels = channels.map((channel) => {
     return (
-      <BudgetProvider>
-        <Channel
-          key={channel.id}
-          channel={channel}
-          setChannelBudget={(channelId, budget) =>
-            setChannelBudget(channelId, budget)
-          }
-        />
-      </BudgetProvider>
+      <Channel
+        key={channel.id}
+        channel={channel}
+        setChannelBudget={(channelId, budget) =>
+          setChannelBudget(channelId, budget)
+        }
+      />
     );
   });
+
+  console.info(channels);
 
   return <div>{allChannels}</div>;
 };
