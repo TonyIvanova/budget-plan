@@ -5,7 +5,7 @@ import { createNewDistribution } from "./budgetDistributionsSlice";
 const initialState = {
   channels: [],
 };
-
+ 
 export const channelsSlice = createSlice({
   name: "channels",
   initialState,

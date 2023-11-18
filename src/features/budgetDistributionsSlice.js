@@ -20,7 +20,7 @@ const generateDistribution = ({ frequency, baseline }) => {
 
 const initialState = {
   budgetDistributions: [],
-};
+}; 
 
 const budgetDistributionsSlice = createSlice({
   name: "budgetDistribution",
