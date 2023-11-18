@@ -50,10 +50,14 @@ export const BudgetProvider = ({ children }) => {
     })
   );
 
+  const initializeBudget = (channelId) => {
+    // get budget from channels if exiists
+    // if not, initialize with default values
+  };
+
   const updateBudget = ({ frequency, allocation, baseline }) => {
     const budget = generateBudget({ frequency, allocation, baseline });
     setBudget(budget);
-    console.info("Budget updated");
   };
 
   const updateDistribution = (newDistribution) => {
@@ -109,7 +113,3 @@ export const BudgetAllocation = {
   Manual: "manual",
 };
 
-// export const BudgetContext = createContext({
-//   budget: generateBudget(Frequency.Annually, BudgetAllocation.Equal, 12000),
-//   setBudget: (budget) => {},
-// });

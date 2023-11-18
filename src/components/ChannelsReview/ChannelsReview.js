@@ -11,30 +11,37 @@ const ChannelsReview = () => {
   const { channels } = useChannels();
   const [isSlideLeft, setIsSlideLeft] = React.useState(true);
 
-  const channelsTitles = channels.map((channel) => {
+  const getChannelValues = (channel) => {
+    return channel?.budget?.distribution?.map((value, index) => {
+      return <td>${value.value}</td>;
+    });
+  };
+
+  const tableValues = channels?.map((channel) => {
     return (
-      <div key={channel.id} className="channels-titles">
-        <img src={channelIcon} alt={channel.name} />
-        {channel.name}
-      </div>
+      <tr>
+        <td
+          className="channel-title"
+          style={{
+            backgroundImage: `url(${background})`,
+            backgroundRepeat: "repeat-y",
+            backgroundPositionX: "right",
+            borderRight: "2px solid #b2bbd550",
+          }}
+        >
+          <img src={channelIcon} alt={channel?.name} />
+          {channel?.name}
+        </td>
+        {getChannelValues(channel)}
+      </tr>
     );
   });
 
-  const channelValues = channels.map((channel) => {
-    return channel.budget.distribution.map((value, index) => {
-      return (
-        <div key={channel.id} className="channels-value">
-          ${value.value}
-        </div>
-      );
-    });
-  });
-
-  const monthsTable = months.map((month, index) => {
+  const monthsHeaders = months.map((month, index) => {
     return (
-      <p key={index} className="months gray-title">
+      <th key={index} className="months gray-title">
         {month}
-      </p>
+      </th>
     );
   });
 
@@ -47,50 +54,67 @@ const ChannelsReview = () => {
   };
 
   return (
-    <div className="channels-container">
-      <div
-        className="channels-titles-container"
-        style={{
-          backgroundImage: `url(${background})`,
-          backgroundRepeat: "repeat-y",
-          backgroundPositionX: "right",
-        }}
-      >
-        <p className="gray-title">CHANNEL</p>
-
-        {channelsTitles}
-      </div>
-      <div className="channels-data-grid-container">
-        {!isSlideLeft && (
-          <img
-            src={smallArrow}
-            alt="arrow"
-            className="arrow left"
-            onClick={() => onSlide("left")}
-          />
-        )}
-
-        <div
-          className={
-            isSlideLeft
-              ? "channels-data-grid slide-left"
-              : "channels-data-grid slide-right"
-          }
+    <table className="channels-table">
+      <thead>
+        <th
+          style={{
+            backgroundImage: `url(${background})`,
+            backgroundRepeat: "repeat-y",
+            backgroundPositionX: "right",
+            borderRight: "2px solid #b2bbd550",
+          }}
         >
-          {monthsTable}
-          {channelValues}
-        </div>
+          Channel
+        </th>
+        {monthsHeaders}
+      </thead>
+      <tbody>{tableValues}</tbody>
+    </table>
 
-        {isSlideLeft && (
-          <img
-            src={smallArrow}
-            alt="arrow"
-            className="arrow"
-            onClick={() => onSlide("right")}
-          />
-        )}
-      </div>
-    </div>
+    // <div className="channels-container">
+    //   <div
+    //     className="channels-titles-container"
+    //     style={{
+    //       backgroundImage: `url(${background})`,
+    //       backgroundRepeat: "repeat-y",
+    //       backgroundPositionX: "right",
+    //     }}
+    //   >
+    //     <p className="gray-title">CHANNEL</p>
+
+    //     {channelsTitles}
+    //   </div>
+    //   <div className="channels-data-grid-container">
+    //     {!isSlideLeft && (
+    //       <img
+    //         src={smallArrow}
+    //         alt="arrow"
+    //         className="arrow left"
+    //         onClick={() => onSlide("left")}
+    //       />
+    //     )}
+
+    //     <div
+    //       className={
+    //         isSlideLeft
+    //           ? "channels-data-grid slide-left"
+    //           : "channels-data-grid slide-right"
+    //       }
+    //     >
+    //       {monthsTable}
+    //       {channelValues}
+    //     </div>
+
+    //     {isSlideLeft && (
+    //       <img
+    //         src={smallArrow}
+    //         alt="arrow"
+    //         className="arrow"
+    //         onClick={() => onSlide("right")}
+    //       />
+    //     )}
+    //   </div>
+    // </div>
   );
 };
 

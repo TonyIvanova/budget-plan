@@ -29,8 +29,12 @@ export const ChannelsProvider = ({ children }) => {
   };
 
   const addChannel = (newChannel) => {
-    closeAll();
-    setChannels([...channels, newChannel]);
+     const updatedChannels = channels.map((channel) => {
+       channel = { ...channel, isOpen: false };
+       return channel;
+     });
+     setChannels([...updatedChannels, newChannel]);
+
   };
 
   const toggleChannel = (channelId) => {

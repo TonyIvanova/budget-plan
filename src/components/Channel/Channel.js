@@ -24,7 +24,7 @@ const Channel = ({ channel, setChannelBudget }) => {
 
   useEffect(() => {
     debounceBudgetChange(channel.id, budget);
-  }, [budget, channel.id, debounceBudgetChange]);
+  }, [budget, channel.id]);
 
   const onHeaderClick = () => {
     toggleChannel(channel.id);
