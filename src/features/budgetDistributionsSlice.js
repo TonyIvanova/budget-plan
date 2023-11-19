@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Frequency } from "./budgetsSlice";
+import { updateChannelBudgetBaselineValue } from "./budgetsSlice";
 
-const generateDistribution = ({ frequency, baseline }) => {
+export const generateDistribution = ({ frequency, baseline }) => {
   let baseValue;
 
   if (frequency === Frequency.Annually) {
@@ -12,7 +13,7 @@ const generateDistribution = ({ frequency, baseline }) => {
 
   return frequency.options.map((option) => {
     return {
-      label: option.timeFrame,
+      label: option,
       value: baseValue,
     };
   });
@@ -20,7 +21,7 @@ const generateDistribution = ({ frequency, baseline }) => {
 
 const initialState = {
   budgetDistributions: [],
-}; 
+};
 
 const budgetDistributionsSlice = createSlice({
   name: "budgetDistribution",
@@ -35,7 +36,7 @@ const budgetDistributionsSlice = createSlice({
         }),
       });
     },
-    updateBudgetDistribution: (state, action) => {
+    updateBudgetDistributionValues: (state, action) => {
       const { budgetId, newDistribution } = action.payload;
       const distribution = state.budgetDistributions.find(
         (distribution) => distribution.budgetId === budgetId
@@ -45,7 +46,28 @@ const budgetDistributionsSlice = createSlice({
   },
 });
 
-export const { updateBudgetDistribution, createNewDistribution } =
+export const updateBudgetDistribution = ({ budgetId, newDistribution }) => {
+  return (dispatch, getState) => {
+    dispatch(updateBudgetDistributionValues({ budgetId, newDistribution }));
+
+    const budget = getState().budgetsReducer.budgets.find(
+      (budget) => budget.id === budgetId
+    );
+
+    const newBudgetBaseline = newDistribution.reduce((acc, item) => {
+      return acc + parseFloat(item.value);
+    }, 0);
+
+    dispatch(
+      updateChannelBudgetBaselineValue({
+        channelId: budget.channelId,
+        baseline: newBudgetBaseline,
+      })
+    );
+  };
+};
+
+export const { updateBudgetDistributionValues, createNewDistribution } =
   budgetDistributionsSlice.actions;
 
 export default budgetDistributionsSlice.reducer;

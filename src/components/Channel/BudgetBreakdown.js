@@ -20,12 +20,11 @@ const BudgetBreakdown = ({ budgetId }) => {
   const dispatch = useDispatch();
 
   const debounceUpdateDistribution = useCallback(
-    _debounce((value, index) => updateDistribution(value, index), 300),
+    _debounce((value, index) => updateDistribution(value, index), 800),
     []
   );
 
   const updateDistribution = (value, index) => {
-    console.info("updating distribution");
     const newDistribution = distribution.distribution.map((item, i) => {
       if (i === index) {
         return {

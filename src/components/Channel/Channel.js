@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import _debounce from "lodash.debounce";
 import "./Channel.css";
 import arrow from "../../assets/images/arrow.svg";
@@ -18,8 +18,15 @@ import { toggleChannel } from "../../features/channelsSlice";
 
 const Channel = ({ channel, setChannelBudget }) => {
   const dispatch = useDispatch();
-  const budgets = useSelector((state) => state.budgetsReducer.budgets);
-  const budget = budgets.find((budget) => budget.channelId === channel.id);
+  const budget = useSelector((state) =>
+    state.budgetsReducer.budgets.find(
+      (budget) => budget.channelId === channel.id
+    )
+  );
+  useEffect(() => {
+    setBudgetBaseline(budget?.baseline);
+  }, [budget]);
+
   const [budgetBaseline, setBudgetBaseline] = useState(budget?.baseline);
 
   const debounceBudgetBaselineChange = useCallback(

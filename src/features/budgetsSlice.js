@@ -1,4 +1,8 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import {
+  updateBudgetDistribution,
+  generateDistribution,
+} from "./budgetDistributionsSlice";
 
 export const months = [
   "Jan 23",
@@ -70,7 +74,7 @@ const budgetsSlice = createSlice({
       budget.distribution = newDistribution;
     },
 
-    updateChannelBudgetAllocation: (state, action) => {
+    updateChannelBudgetAllocationValue: (state, action) => {
       const { channelId, allocation } = action.payload;
       const budget = state.budgets.find(
         (budget) => budget.channelId === channelId
@@ -78,7 +82,7 @@ const budgetsSlice = createSlice({
       budget.allocation = allocation;
     },
 
-    updateChannelBudgetFrequency: (state, action) => {
+    updateChannelBudgetFrequencyValue: (state, action) => {
       const { channelId, frequency } = action.payload;
       const budget = state.budgets.find(
         (budget) => budget.channelId === channelId
@@ -86,7 +90,7 @@ const budgetsSlice = createSlice({
       budget.frequency = frequency;
     },
 
-    updateChannelBudgetBaseline: (state, action) => {
+    updateChannelBudgetBaselineValue: (state, action) => {
       const { channelId, baseline } = action.payload;
 
       const budget = state.budgets.find(
@@ -97,11 +101,74 @@ const budgetsSlice = createSlice({
   },
 });
 
-// Step 4: Export budgets slice
+/* ---------- Complex Actions -------- */
+
+export const updateChannelBudgetFrequency = ({ channelId, frequency }) => {
+  return (dispatch, getState) => {
+    dispatch(updateChannelBudgetFrequencyValue({ channelId, frequency }));
+
+    const budget = getState().budgetsReducer.budgets.find(
+      (budget) => budget.channelId === channelId
+    );
+
+    dispatch(
+      updateBudgetDistribution({
+        budgetId: budget.id,
+        newDistribution: generateDistribution({
+          frequency,
+          baseline: budget.baseline,
+        }),
+      })
+    );
+  };
+};
+
+export const updateChannelBudgetAllocation = ({ channelId, allocation }) => {
+  return (dispatch, getState) => {
+    dispatch(updateChannelBudgetAllocationValue({ channelId, allocation }));
+
+    if (allocation === "manual") return;
+
+    const budget = getState().budgetsReducer.budgets.find(
+      (budget) => budget.channelId === channelId
+    );
+
+    dispatch(
+      updateBudgetDistribution({
+        budgetId: budget.id,
+        newDistribution: generateDistribution({
+          frequency: budget.frequency,
+          baseline: budget.baseline,
+        }),
+      })
+    );
+  };
+};
+
+export const updateChannelBudgetBaseline = ({ channelId, baseline }) => {
+  return (dispatch, getState) => {
+    dispatch(updateChannelBudgetBaselineValue({ channelId, baseline }));
+
+    const budget = getState().budgetsReducer.budgets.find(
+      (budget) => budget.channelId === channelId
+    );
+
+    dispatch(
+      updateBudgetDistribution({
+        budgetId: budget.id,
+        newDistribution: generateDistribution({
+          frequency: budget.frequency,
+          baseline: budget.baseline,
+        }),
+      })
+    );
+  };
+};
+
 export const {
   createNewBudget,
-  updateChannelBudgetAllocation,
-  updateChannelBudgetFrequency,
-  updateChannelBudgetBaseline,
+  updateChannelBudgetAllocationValue,
+  updateChannelBudgetFrequencyValue,
+  updateChannelBudgetBaselineValue,
 } = budgetsSlice.actions;
 export default budgetsSlice.reducer;
