@@ -65,7 +65,7 @@ const Channel = ({ channel, setChannelBudget }) => {
     dispatch(
       updateChannelBudgetBaseline({
         channelId: channel.id,
-        baseline: parseFloat(value),
+        baseline: parseFloat(value).toLocaleString("en-US"),
       })
     );
   };

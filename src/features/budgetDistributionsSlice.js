@@ -6,9 +6,9 @@ export const generateDistribution = ({ frequency, baseline }) => {
   let baseValue;
 
   if (frequency === Frequency.Annually) {
-    baseValue = (baseline / frequency.options.length).toFixed(2);
+    baseValue = (parseFloat(baseline) / frequency.options.length).toFixed(2);
   } else {
-    baseValue = baseline;
+    baseValue = parseFloat(baseline);
   }
 
   return frequency.options.map((option) => {
@@ -41,7 +41,6 @@ const budgetDistributionsSlice = createSlice({
       const distribution = state.budgetDistributions.find(
         (distribution) => distribution.budgetId === budgetId
       );
-      console.log(current(distribution));
       distribution.distribution = newDistribution;
     },
     updateBudgetDistributionValueByIndex: (state, action) => {

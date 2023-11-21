@@ -22,8 +22,6 @@ const FirstTab = () => {
     );
   });
 
-  console.info(channels);
-
   return <div>{allChannels}</div>;
 };
 

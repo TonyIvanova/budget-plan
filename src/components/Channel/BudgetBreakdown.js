@@ -24,15 +24,6 @@ const BudgetBreakdown = ({ budgetId }) => {
   );
 
   const updateDistribution = (value, index) => {
-    // const newDistribution = distribution.map((item, i) => {
-    //   if (i === index) {
-    //     return {
-    //       label: item.label,
-    //       value: parseFloat(value),
-    //     };
-    //   }
-    //   return item;
-    // });
     dispatch(
       updateBudgetDistributionByIndex({
         budgetId: budgetId,

@@ -12,7 +12,14 @@ import { nanoid } from "@reduxjs/toolkit";
 const BudgetPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    onAddChannel();
+    // Rows should be closed by default, so first row is closed.
+    const newChannel = {
+      name: "Paid reviews",
+      id: nanoid(),
+      isOpen: false,
+      budgetId: nanoid(),
+    };
+    dispatch(addChannelAndCreateBudgetAndDistribution(newChannel));
   }, []);
 
   const onAddChannel = () => {

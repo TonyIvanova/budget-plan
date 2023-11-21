@@ -14,8 +14,6 @@ const ChannelsReview = () => {
   );
 
   const getChannelValues = (channel) => {
-    console.info(budgetDistributions);
-    console.info(channel.budgetId);
     return budgetDistributions
       .find((distribution) => distribution.budgetId === channel.budgetId)
       .distribution.map((value, index) => {
