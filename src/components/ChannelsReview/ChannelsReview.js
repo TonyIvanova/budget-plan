@@ -49,14 +49,6 @@ const ChannelsReview = () => {
     );
   });
 
-  // const onSlide = (where) => {
-  //   if (where === "left") {
-  //     setIsSlideLeft(true);
-  //   } else {
-  //     setIsSlideLeft(false);
-  //   }
-  // };
-
   return (
     <table className="channels-table">
       <thead>
@@ -74,51 +66,6 @@ const ChannelsReview = () => {
       </thead>
       <tbody>{tableValues}</tbody>
     </table>
-
-    // <div className="channels-container">
-    //   <div
-    //     className="channels-titles-container"
-    //     style={{
-    //       backgroundImage: `url(${background})`,
-    //       backgroundRepeat: "repeat-y",
-    //       backgroundPositionX: "right",
-    //     }}
-    //   >
-    //     <p className="gray-title">CHANNEL</p>
-
-    //     {channelsTitles}
-    //   </div>
-    //   <div className="channels-data-grid-container">
-    //     {!isSlideLeft && (
-    //       <img
-    //         src={smallArrow}
-    //         alt="arrow"
-    //         className="arrow left"
-    //         onClick={() => onSlide("left")}
-    //       />
-    //     )}
-
-    //     <div
-    //       className={
-    //         isSlideLeft
-    //           ? "channels-data-grid slide-left"
-    //           : "channels-data-grid slide-right"
-    //       }
-    //     >
-    //       {monthsTable}
-    //       {channelValues}
-    //     </div>
-
-    //     {isSlideLeft && (
-    //       <img
-    //         src={smallArrow}
-    //         alt="arrow"
-    //         className="arrow"
-    //         onClick={() => onSlide("right")}
-    //       />
-    //     )}
-    //   </div>
-    // </div>
   );
 };
 

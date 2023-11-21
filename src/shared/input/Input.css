@@ -11,9 +11,15 @@
   border: 1px solid rgba(178, 187, 213, 0.5);
   padding: 0 16px;
   font-size: 14px;
+  color: #2A3558;
 }
 
 
+
+.custom-input input:disabled {
+  
+  color: #99A4C2;
+}
 .custom-input input:focus {
   outline: 1px solid rgba(178, 187, 213, 0.5);
 }
