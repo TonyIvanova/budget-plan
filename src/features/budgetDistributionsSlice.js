@@ -6,7 +6,8 @@ export const generateDistribution = ({ frequency, baseline }) => {
   let baseValue;
 
   if (frequency === Frequency.Annually) {
-    baseValue = (parseFloat(baseline) / frequency.options.length).toFixed(2);
+    // change toFixed to 2 everywhere if you want to show cents, else it wil be rounded (floor) to whole number
+    baseValue = (parseFloat(baseline) / frequency.options.length).toFixed(0);
   } else {
     baseValue = parseFloat(baseline);
   }
@@ -94,7 +95,7 @@ export const updateBudgetDistributionByIndex = ({ budgetId, index, value }) => {
     if (budget.frequency === Frequency.Annually) {
       newBudgetBaseline = sum;
     } else {
-      newBudgetBaseline = (sum / budget.frequency.options.length).toFixed(2);
+      newBudgetBaseline = (sum / budget.frequency.options.length).toFixed(0);
     }
 
     dispatch(

@@ -5,6 +5,11 @@
   gap: 8px;
 }
 
+.custom-input .relative input {
+  padding-left: 33px;
+
+}
+
 .custom-input input {
   border-radius: 3px;
   height: 40px;
@@ -13,7 +18,16 @@
   font-size: 14px;
   color: #2A3558;
 }
+.custom-input input:before {
+  content: '$';
+  color: #002faf;
+  font-size: 14px;
+  line-height: 40px;
+  padding-left: 16px;
+  font-weight: 500;
+  display: block;
 
+}
 
 
 .custom-input input:disabled {
@@ -33,4 +47,18 @@
 
 .budget-table .custom-input {
     width: 160px;
+}
+
+.relative {
+  position: relative
+}
+
+.currency-sign {
+  position: absolute;
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  font-size: 14px;
+  font-family: AvenirNext;
+  color:  #2A3558;
 }

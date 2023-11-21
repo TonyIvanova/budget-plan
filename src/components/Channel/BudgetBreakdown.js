@@ -42,6 +42,7 @@ const BudgetBreakdown = ({ budgetId }) => {
         type="number"
         disabled={budget.allocation === "equal" ? "disabled" : ""}
         onChange={(event) => debounceUpdateDistribution(event, i)}
+        currencySign="$"
       />
     );
   });
