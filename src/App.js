@@ -4,7 +4,7 @@ import BudgetPage from "./pages/BudgetPage/BudgetPage";
 function App() {
   return (
     <div className="App">
-      <BudgetPage></BudgetPage>
+      <BudgetPage />
     </div>
   );
 }

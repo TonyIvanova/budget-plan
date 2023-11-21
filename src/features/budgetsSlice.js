@@ -2,6 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import {
   updateBudgetDistribution,
   generateDistribution,
+  updateBudgetDistributionValues,
 } from "./budgetDistributionsSlice";
 
 export const months = [
@@ -112,7 +113,7 @@ export const updateChannelBudgetFrequency = ({ channelId, frequency }) => {
     );
 
     dispatch(
-      updateBudgetDistribution({
+      updateBudgetDistributionValues({
         budgetId: budget.id,
         newDistribution: generateDistribution({
           frequency,
@@ -134,7 +135,7 @@ export const updateChannelBudgetAllocation = ({ channelId, allocation }) => {
     );
 
     dispatch(
-      updateBudgetDistribution({
+      updateBudgetDistributionValues({
         budgetId: budget.id,
         newDistribution: generateDistribution({
           frequency: budget.frequency,
@@ -154,7 +155,7 @@ export const updateChannelBudgetBaseline = ({ channelId, baseline }) => {
     );
 
     dispatch(
-      updateBudgetDistribution({
+      updateBudgetDistributionValues({
         budgetId: budget.id,
         newDistribution: generateDistribution({
           frequency: budget.frequency,

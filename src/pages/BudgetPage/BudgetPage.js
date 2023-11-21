@@ -10,7 +10,6 @@ import { createNewDistribution } from "../../features/budgetDistributionsSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
 const BudgetPage = () => {
-  // const channels = useSelector((state) => state.channels);
   const dispatch = useDispatch();
   useEffect(() => {
     onAddChannel();
@@ -23,7 +22,6 @@ const BudgetPage = () => {
       isOpen: true,
       budgetId: nanoid(),
     };
-    // we don't need a distribution id, because one budget has one distribution
     dispatch(addChannelAndCreateBudgetAndDistribution(newChannel));
   };
 

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { Frequency } from "./budgetsSlice";
 import { updateChannelBudgetBaselineValue } from "./budgetsSlice";
 
@@ -41,7 +41,15 @@ const budgetDistributionsSlice = createSlice({
       const distribution = state.budgetDistributions.find(
         (distribution) => distribution.budgetId === budgetId
       );
+      console.log(current(distribution));
       distribution.distribution = newDistribution;
+    },
+    updateBudgetDistributionValueByIndex: (state, action) => {
+      const { budgetId, index, value } = action.payload;
+      const distribution = state.budgetDistributions.find(
+        (distribution) => distribution.budgetId === budgetId
+      );
+      distribution.distribution[index].value = value;
     },
   },
 });
@@ -67,7 +75,42 @@ export const updateBudgetDistribution = ({ budgetId, newDistribution }) => {
   };
 };
 
-export const { updateBudgetDistributionValues, createNewDistribution } =
-  budgetDistributionsSlice.actions;
+export const updateBudgetDistributionByIndex = ({ budgetId, index, value }) => {
+  return (dispatch, getState) => {
+    dispatch(updateBudgetDistributionValueByIndex({ budgetId, index, value }));
+
+    const budget = getState().budgetsReducer.budgets.find(
+      (budget) => budget.id === budgetId
+    );
+    const distribution =
+      getState().budgetDistributionsReducer.budgetDistributions.find(
+        (distribution) => distribution.budgetId === budgetId
+      ).distribution;
+
+    const sum = distribution.reduce((acc, item) => {
+      return acc + parseFloat(item.value);
+    }, 0);
+
+    let newBudgetBaseline;
+    if (budget.frequency === Frequency.Annually) {
+      newBudgetBaseline = sum;
+    } else {
+      newBudgetBaseline = (sum / budget.frequency.options.length).toFixed(2);
+    }
+
+    dispatch(
+      updateChannelBudgetBaselineValue({
+        channelId: budget.channelId,
+        baseline: newBudgetBaseline,
+      })
+    );
+  };
+};
+
+export const {
+  updateBudgetDistributionValues,
+  createNewDistribution,
+  updateBudgetDistributionValueByIndex,
+} = budgetDistributionsSlice.actions;
 
 export default budgetDistributionsSlice.reducer;
