@@ -45,6 +45,7 @@ table {
 .channels-table td:nth-child(2),
 .channels-table th:nth-child(2) {
   padding-left: 25px;
+  width: 85px;
 }
 
 .channels-table td:nth-child(1),
