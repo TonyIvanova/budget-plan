@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./BudgetPage.css";
 import Button from "../../shared/button/Button.js";
 import plus from "../../assets/images/plus.svg";
 import Tabs from "../../components/Tabs/Tabs.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addChannelAndCreateBudgetAndDistribution } from "../../features/channelsSlice";
-import { createNewBudget } from "../../features/budgetsSlice";
-import { createNewDistribution } from "../../features/budgetDistributionsSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
 const BudgetPage = () => {

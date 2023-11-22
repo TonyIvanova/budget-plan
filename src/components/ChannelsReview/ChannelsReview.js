@@ -2,7 +2,6 @@ import React from "react";
 import channelIcon from "../../assets/images/channel.svg";
 import background from "../../assets/images/channels-view-background.svg";
 import { months } from "../../features/budgetsSlice";
-import smallArrow from "../../assets/images/small-arrow.svg";
 import { useSelector } from "react-redux";
 
 import "./ChannelsReview.css";

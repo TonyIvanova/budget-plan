@@ -1,6 +1,5 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
-  updateBudgetDistribution,
   generateDistribution,
   updateBudgetDistributionValues,
 } from "./budgetDistributionsSlice";
@@ -32,7 +31,7 @@ export const BudgetAllocation = {
   Equal: "equal",
   Manual: "manual",
 };
-// Step 1: Import dependencies and functions from channelsSlice.js
+
 export const generateBudget = ({ frequency, allocation, baseline }) => {
   return {
     frequency: frequency,
@@ -41,12 +40,10 @@ export const generateBudget = ({ frequency, allocation, baseline }) => {
   };
 };
 
-// Step 2: Create initial state for budgets slice
 const initialState = {
   budgets: [],
 };
 
-// Step 3: Define budgets reducer function
 const budgetsSlice = createSlice({
   name: "budgets",
   initialState,
