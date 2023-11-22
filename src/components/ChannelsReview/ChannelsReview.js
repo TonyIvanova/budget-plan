@@ -23,7 +23,7 @@ const ChannelsReview = () => {
       const newDistribution = [];
       distribution.forEach((value) => {
         const perMonth = (parseFloat(value.value) / 3).toFixed(0);
-        newDistribution.unshift(perMonth, perMonth, perMonth);
+        newDistribution.push(perMonth, perMonth, perMonth);
       });
       distribution = newDistribution;
     }
