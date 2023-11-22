@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/budget-plan/static/css/main.05522bcd.css",
+    "main.js": "/budget-plan/static/js/main.c8aa62ff.js",
+    "static/js/787.88e99f6d.chunk.js": "/budget-plan/static/js/787.88e99f6d.chunk.js",
+    "static/media/AvenirNextLTPro-Bold.otf": "/budget-plan/static/media/AvenirNextLTPro-Bold.711a4eb654bf1139f123.otf",
+    "static/media/AvenirNextLTPro-Regular.otf": "/budget-plan/static/media/AvenirNextLTPro-Regular.94f2f163d4b698242fef.otf",
+    "static/media/AvenirNextLTPro-It.otf": "/budget-plan/static/media/AvenirNextLTPro-It.3e062c6caf04ecafa42c.otf",
+    "static/media/channel.svg": "/budget-plan/static/media/channel.9a2dd9d297aa08df6b4140f5a3bbbfa9.svg",
+    "index.html": "/budget-plan/index.html",
+    "static/media/info.svg": "/budget-plan/static/media/info.4946b4002216912070328ef0f5288790.svg",
+    "static/media/dots.svg": "/budget-plan/static/media/dots.8f6792ff93c7c58ec40a2c9b09892389.svg",
+    "static/media/channels-view-background.svg": "/budget-plan/static/media/channels-view-background.692971d12d74e3f1c84e5e9a95fdc182.svg",
+    "static/media/plus.svg": "/budget-plan/static/media/plus.df2d0d3bd40cf8c905fb3bedb113faf0.svg",
+    "static/media/arrow.svg": "/budget-plan/static/media/arrow.eefca76abb41f6700c5039f18d1a01f3.svg",
+    "main.05522bcd.css.map": "/budget-plan/static/css/main.05522bcd.css.map",
+    "main.c8aa62ff.js.map": "/budget-plan/static/js/main.c8aa62ff.js.map",
+    "787.88e99f6d.chunk.js.map": "/budget-plan/static/js/787.88e99f6d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.05522bcd.css",
+    "static/js/main.c8aa62ff.js"
+  ]
+}
