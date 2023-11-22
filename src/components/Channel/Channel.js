@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import _debounce from "lodash.debounce";
 import "./Channel.css";
 import arrow from "../../assets/images/arrow.svg";
+import dots from "../../assets/images/dots.svg";
 import channelIcon from "../../assets/images/channel.svg";
 import Input from "../../shared/input/Input";
 import ButtonGroup from "../../shared/ButtonGroup/ButtonGroup";
@@ -14,9 +15,17 @@ import {
   updateChannelBudgetBaseline,
   updateChannelBudgetFrequency,
 } from "../../features/budgetsSlice";
-import { toggleChannel } from "../../features/channelsSlice";
+import {
+  removeChannel,
+  toggleChannel,
+  updateChannelName,
+} from "../../features/channelsSlice";
+import ClickOutsideDetector from "../../shared/ClickOutsideDetector/ClickOutsideDetector";
 
 const Channel = ({ channel, setChannelBudget }) => {
+  const [showEditMenu, setShowEditMenu] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
   const dispatch = useDispatch();
   const budget = useSelector((state) =>
     state.budgetsReducer.budgets.find(
@@ -35,7 +44,12 @@ const Channel = ({ channel, setChannelBudget }) => {
   );
 
   const onHeaderClick = () => {
-    dispatch(toggleChannel(channel.id));
+    if (!isEditing) dispatch(toggleChannel(channel.id));
+  };
+
+  const onDotsClick = (e) => {
+    e.stopPropagation();
+    setShowEditMenu(!showEditMenu);
   };
 
   const onAllocationChange = (button) => {
@@ -69,6 +83,21 @@ const Channel = ({ channel, setChannelBudget }) => {
       })
     );
   };
+  const handleClickOutside = () => {
+    setShowEditMenu(false);
+  };
+
+  const onRemove = (channelId) => {
+    dispatch(removeChannel(channelId));
+  };
+
+  const onEdit = (channelId) => {
+    setIsEditing(true);
+  };
+
+  const onChannelNameChange = (channelId, newName) => {
+    dispatch(updateChannelName({ channelId, newName }));
+  };
 
   return (
     <section className="channel">
@@ -79,7 +108,38 @@ const Channel = ({ channel, setChannelBudget }) => {
           alt="open"
         />
         <img className="channel-icon" src={channelIcon} alt="channel" />
-        <p>{channel.name}</p>
+        {isEditing ? (
+          <ClickOutsideDetector onClickOutside={() => setIsEditing(false)}>
+            <Input
+              value={channel.name}
+              onChange={(value) => onChannelNameChange(channel.id, value)}
+              type="text"
+            />
+          </ClickOutsideDetector>
+        ) : (
+          <p>{channel.name}</p>
+        )}
+        <ClickOutsideDetector onClickOutside={handleClickOutside}>
+          <div className="edit-dots-wrapper" onClick={onDotsClick}>
+            <img src={dots} alt="edit" className="dots" />
+            {showEditMenu && (
+              <div className="edit-channel-menu">
+                <button
+                  className="edit-button"
+                  onClick={() => onEdit(channel.id)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="remove-button"
+                  onClick={() => onRemove(channel.id)}
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+          </div>
+        </ClickOutsideDetector>
       </div>
       {channel.isOpen ? (
         <div className="channel-content">

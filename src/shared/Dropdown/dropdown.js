@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import arrow from "../../assets/images/arrow.svg";
 import info from "../../assets/images/info.svg";
 import "./dropdown.css";
+import ClickOutsideDetector from "../ClickOutsideDetector/ClickOutsideDetector";
 
 const Dropdown = ({ options, infoText, label, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +34,7 @@ const Dropdown = ({ options, infoText, label, onSelect }) => {
   };
 
   return (
-    <div>
+    <ClickOutsideDetector onClickOutside={() => setIsOpen(false)}>
       {labelElement}
       <div className="dropdown-container">
         <div className="dropdown" onClick={onSelectClick}>
@@ -54,7 +55,7 @@ const Dropdown = ({ options, infoText, label, onSelect }) => {
           </ul>
         )}
       </div>
-    </div>
+    </ClickOutsideDetector>
   );
 };
 

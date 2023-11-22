@@ -5,7 +5,7 @@ import { createNewDistribution } from "./budgetDistributionsSlice";
 const initialState = {
   channels: [],
 };
- 
+
 export const channelsSlice = createSlice({
   name: "channels",
   initialState,
@@ -17,13 +17,11 @@ export const channelsSlice = createSlice({
       });
       state.channels.push(action.payload);
     },
-
     removeChannel: (state, action) => {
       state.channels = state.channels.filter(
         (channel) => channel.id !== action.payload
       );
     },
-
     toggleChannel: (state, action) => {
       const channels = state.channels.map((channel) => {
         if (channel.id === action.payload) {
@@ -39,6 +37,13 @@ export const channelsSlice = createSlice({
         }
       });
       state.channels = channels;
+    },
+    updateChannelName: (state, action) => {
+      const { channelId, newName } = action.payload;
+      const channel = state.channels.find(
+        (channel) => channel.id === channelId
+      );
+      channel.name = newName;
     },
   },
 });
@@ -56,7 +61,7 @@ export const addChannelAndCreateBudgetAndDistribution = (newChannel) => {
   };
 };
 
-export const { addChannel, removeChannel, toggleChannel } =
+export const { addChannel, removeChannel, toggleChannel, updateChannelName } =
   channelsSlice.actions;
 
 export default channelsSlice.reducer;
